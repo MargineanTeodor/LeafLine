@@ -1,0 +1,93 @@
+/* navbar.component.css */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%; /* Ensure it covers full width */
+    height: 100%; /* Ensure it covers full height */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+body {
+    background-image: url('./resources/images/background.jpg ');
+    background-size: cover;
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents the image from tiling */
+    background-attachment: fixed; 
+    height:100vh;
+  }
+
+.handwriting-label {
+    font-family: 'Pacifico', cursive; /* Use the font */
+    font-size: 36px; /* Large text */
+    text-align: center; /* Center the text horizontally */
+    position: absolute; /* Positioning it */
+    top: 50%; /* Center vertically */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Adjust to exactly center */
+    width: 80%; /* Make sure it spans the width to center text correctly */
+}
+
+.log-in-button {
+    padding: 8px 15px; 
+    background-color: rgba(229, 246, 219, 0.1);  
+    color: rgb(3, 0, 0); 
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.75rem; 
+    margin-left: auto;
+    border-radius: 5px; 
+}
+
+.log-in-button:hover {
+    background-color: rgba(180, 238, 147, 0.3); 
+}
+
+.left-aligned {
+    text-align: left;
+  }
+  
+  .center-aligned {
+    text-align: center;
+  }
+  
+  .right-aligned {
+    text-align: right;
+  }
+  
+.navbar {
+    background-color: rgba(229, 246, 219, 0.3);
+    padding: 0.75rem 3rem; 
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+  }
+  .navbar-logo {
+    height: 70px; 
+    width: auto;
+    margin-right: 10px;
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+    font-size: 2rem; 
+  }
+  
+  .navbar-nav {
+    display: flex;
+    justify-content: center; 
+    flex-grow: 1; 
+  }
+  
+  .nav-link {
+    color: #333;
+    text-decoration: none;
+    padding: 0 1.125rem; /* Increased padding */
+    font-size: 1.85rem; /* Increased font size */
+  }
+  
+  .nav-link:hover {
+    color: #000;
+  }
+  
