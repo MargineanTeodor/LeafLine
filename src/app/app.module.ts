@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { ReactiveFormsModule } from '@angular/forms'; 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
@@ -18,11 +18,12 @@ import { LocationComponent } from './pages/location/location.component';
     ContactComponent,
     RegisterComponent,
     LoginComponent,
-    LocationComponent
+    LocationComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

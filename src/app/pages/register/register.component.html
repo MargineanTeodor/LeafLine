@@ -1,1 +1,42 @@
-<p>register works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="register.component.css">
+</head>
+<body>
+    <form id="registrationForm" class="login-container" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <h2>Register</h2>
+        <div class="input-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" formControlName="name" required>
+        </div>
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" required>
+        </div>
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" formControlName="username" required>
+        </div>
+        <div class="input-group">
+            <label for="age">Age</label>
+            <input type="number" id="age"formControlName="age" min="18" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" formControlName="password" required >
+        </div>
+        <div class="input-group">
+            <label for="RepeatPassword">Repeat Password</label>
+            <input type="password" id="RepeatPassword" formControlName="repeatPassword" required>
+        </div>
+        <div class="button-group">
+            <button type="submit">Register</button>
+        </div>
+    </form>   
+</body>
+</html>
