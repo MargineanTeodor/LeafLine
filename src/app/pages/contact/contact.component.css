@@ -1,0 +1,109 @@
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow-x: hidden; 
+  }
+body {
+    background-image: url('./resources/images/contact.jpg ');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    height:100vh;
+  }
+
+.handwriting-label {
+    font-family: 'Pacifico', cursive; 
+    font-size: 36px; 
+    text-align: center;
+    position: absolute; 
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    width: 80%;
+}
+
+.log-in-button {
+    padding: 8px 15px; 
+    background-color: rgba(229, 246, 219, 0.1);  
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.75rem; 
+    margin-left: auto;
+    border-radius: 5px; 
+}
+
+.log-in-button:hover {
+    background-color: rgba(180, 238, 147, 0.3); 
+}
+
+.left-aligned {
+    text-align: left;
+  }
+  
+  .center-aligned {
+    text-align: center;
+  }
+  
+  .right-aligned {
+    text-align: right;
+  }
+  
+.navbar {
+    background-color: rgba(229, 246, 219, 0.3);
+    padding: 0.75rem 3rem; 
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+  }
+  .navbar-logo {
+    height: 70px; 
+    width: auto;
+    margin-right: 10px;
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+    font-size: 2rem; 
+  }
+  
+  .navbar-nav {
+    display: flex;
+    justify-content: center; 
+    flex-grow: 1; 
+  }
+  
+  .nav-link {
+    color: #333;
+    text-decoration: none;
+    padding: 0 1.125rem; 
+    font-size: 1.85rem;
+  }
+  
+  .nav-link:hover {
+    color: #000;
+  }
+  .auth-button {
+    width: 90px; 
+    padding: 10px;
+    margin: 20px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    background-color: rgba(229, 246, 219, 0.1);
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block; 
+    text-decoration: none; 
+    transform: scale(1.4)
+  }
+  
+  .auth-button:hover {
+    background-color: #98d69b;
+  }

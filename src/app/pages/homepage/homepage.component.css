@@ -90,7 +90,7 @@ body {
     color: #000;
   }
   .auth-button {
-    width: 90px; /* Adjusted to match your design */
+    width: 90px; 
     padding: 10px;
     margin: 20px;
     border: 2px solid transparent;
@@ -99,8 +99,8 @@ body {
     color: black;
     cursor: pointer;
     text-align: center;
-    display: inline-block; /* Ensures <a> elements behave like buttons */
-    text-decoration: none; /* Removes underline from <a> */
+    display: inline-block; 
+    text-decoration: none; 
     transform: scale(1.4)
   }
   
