@@ -29,7 +29,6 @@ body {
 .log-in-button {
     padding: 8px 15px; 
     background-color: rgba(229, 246, 219, 0.1);  
-    color: rgb(3, 0, 0); 
     text-align: center;
     text-decoration: none;
     font-size: 1.75rem; 
@@ -90,4 +89,21 @@ body {
   .nav-link:hover {
     color: #000;
   }
+  .auth-button {
+    width: 90px; /* Adjusted to match your design */
+    padding: 10px;
+    margin: 20px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    background-color: rgba(229, 246, 219, 0.1);
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block; /* Ensures <a> elements behave like buttons */
+    text-decoration: none; /* Removes underline from <a> */
+    transform: scale(1.4)
+  }
   
+  .auth-button:hover {
+    background-color: #98d69b;
+  }

@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-
-<html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="login.component.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.component.css">
 </head>
 <body>
-    <div class="login-container">
-        <h2>Log In</h2>
-        <div class="input-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username">
-        </div>
-        <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password">
-        </div>
-        <div class="button-group">
-            <button type="button" onclick="location.href='/destinations'">Log In</button>
-            <button type="button" onclick="location.href='/register'">Register</button>
-        </div>
-    </div>
-    
-  </body>
-  
+  <div class="login-container">
+    <h2>Log In</h2>
+    <form (ngSubmit)="loginUser()">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username"  name="username" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="button-group">
+        <button type="button" (click)="loginUser()">Log In</button>
+        <button type="button" (click)="goToRegister()">Register</button>
+      </div>
+    </form>
+  </div>
+</body>
 </html>
