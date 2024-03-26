@@ -31,9 +31,9 @@
       <label for="end-date">End Date</label>
     </div>
     <div class="checkbox-group">
-      <input type="checkbox" id="only-available" name="only-available">
-      <label for="only-available">Discounts</label>
-    </div>
+        <input type="checkbox" id="only-available" name="only-available" [(ngModel)]="isDiscountOnly" (change)="updateVisibleImages()">
+        <label for="only-available">Discounts</label>
+      </div>
     <div class="search-group">
       <input type="text" id="search-field" name="search-field" placeholder="Search destinations">
       <button type="submit" class="search-button">Search</button>

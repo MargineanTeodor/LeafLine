@@ -124,7 +124,7 @@ html, body {
     display: flex;
     justify-content: center;
     overflow-x: auto;
-    padding: 20px;
+    padding: 100px;
   }
   
   .cover-flow div {
