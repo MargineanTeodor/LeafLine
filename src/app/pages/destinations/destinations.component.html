@@ -1,1 +1,51 @@
-<p>destinations works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destinations</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="destinations.component.css">
+</head>
+<body>
+<nav class="navbar">
+  <a class="navbar-brand" href="#">
+    <img src="assets/images/logo.png" alt="LeafLine" class="navbar-logo">LeafLine
+  </a>
+  <div class="navbar-nav">
+    <a class="nav-link" href="/">Home</a>
+    <a class="nav-link" href="/destinations">Destinations</a>
+    <a class="nav-link" href="/contact">Contact</a>
+  </div>
+  <a href="/login" class="log-in-button">Log In</a>
+</nav>
+
+
+<div class="search-form">
+    <div class="date-group">
+      <input type="date" id="start-date" name="start-date" placeholder="Start Date">
+      <label for="start-date">Start Date</label>
+    </div>
+    <div class="date-group">
+      <input type="date" id="end-date" name="end-date" placeholder="End Date">
+      <label for="end-date">End Date</label>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" id="only-available" name="only-available">
+      <label for="only-available">Discounts</label>
+    </div>
+    <div class="search-group">
+      <input type="text" id="search-field" name="search-field" placeholder="Search destinations">
+      <button type="submit" class="search-button">Search</button>
+    </div>
+  </div>
+
+  
+<div class="cover-flow">
+  <div *ngFor="let image of visibleImages; let i = index" (click)="setCurrentImageIndex(i)" [class.highlighted]="i === currentImageIndex">
+    <img [src]="image.url" [alt]="image.title">
+    <div>{{image.title}}</div>
+  </div>
+</div>
+</body>
+</html>
