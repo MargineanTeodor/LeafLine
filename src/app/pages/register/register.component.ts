@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router'; 
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
@@ -42,8 +43,20 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      console.log('Form Submitted', this.registerForm.value);
-      this.router.navigate(['/login']);
+      const submissionData = { ...this.registerForm.value };
+      delete submissionData.repeatPassword;
+      console.log(submissionData)
+      this.http.post('http://localhost:5000/register', submissionData).subscribe({
+        next: (response) => {
+          console.log('Registration successful', response);
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          console.log(error);
+          console.error('Registration failed', error);
+          alert('Registration failed: ' + (error.error?.message || 'Unknown error'));
+        }
+      });
     } else {
       this.showValidationErrors();
     }
