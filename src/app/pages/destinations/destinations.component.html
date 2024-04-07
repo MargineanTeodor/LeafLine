@@ -34,10 +34,10 @@
         <input type="checkbox" id="only-available" name="only-available" [(ngModel)]="isDiscountOnly" (change)="updateVisibleImages()">
         <label for="only-available">Discounts</label>
       </div>
-    <div class="search-group">
-      <input type="text" id="search-field" name="search-field" placeholder="Search destinations">
-      <button type="submit" class="search-button">Search</button>
-    </div>
+      <div class="search-group">
+        <input type="text" id="search-field" name="search-field" placeholder="Search destinations" [(ngModel)]="city">
+        <button type="submit" class="search-button">Search</button>
+      </div>
   </div>
 
   
