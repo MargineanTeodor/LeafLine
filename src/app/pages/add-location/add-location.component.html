@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Location</title>
+    <link rel="stylesheet" href="add-location.component.css">
+</head>
+<body>
+    <header>
+        <h1>Add New Location</h1>
+    </header>
+    <main>
+        <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input formControlName="name" type="text" id="name" required>
+            </div>
+            <div class="form-group">
+              <label for="location">Location:</label>
+              <input formControlName="location" type="text" id="location" required>
+            </div>
+            <div class="form-group">
+              <label for="loc_type">Loc_type:</label>
+              <input formControlName="loc_type" type="text" id="loc_type" required>
+            </div>
+            <div class="form-group">
+              <label for="price">Price ($):</label>
+              <input formControlName="price" type="number" id="price" required>
+            </div>
+            <div class="form-group">
+              <label for="nr_slots">Number of Slots:</label>
+              <input formControlName="nr_slots" type="number" id="nr_slots" required>
+            </div>
+            <div class="form-group">
+              <label for="discount">Discount (%):</label>
+              <input formControlName="discount" type="number" id="discount" required>
+            </div>
+            <button type="submit" class="submit-btn">Add Location</button>
+          </form>
+          
+    </main>
+</body>
+</html>

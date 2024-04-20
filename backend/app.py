@@ -34,8 +34,15 @@ class Users(db.Model):
     password = db.Column(db.String(120), nullable=False)
     role = db.Column(db.String(80), nullable=False)
 
-    def __repr__(self):
-        return f'<City {self.name}>'
+class Locations(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    location = db.Column(db.String(120), nullable=False)
+    type = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    nrSlots = db.Column(db.Float, nullable=False)
+    discount = db.Column(db.Float, nullable=False)
+
 
 @app.cli.command("init-db")
 def init_db_command():
@@ -117,6 +124,111 @@ def test_db_connection():
         return jsonify({"success": True, "num_cities": num_cities})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
+
+
+# ====================== ENDPOINTS  LOCATIONS  ===========================
+
+@app.route('/change_discount', methods=['POST'])
+def change_discount():
+    data = request.get_json()
+    location_id = data.get('location_id')
+    new_discount = data.get('new_discount')
+
+    if not location_id or new_discount is None:
+        return jsonify({"error": "Missing location_id or new discount value"}), 400
+
+    location = Locations.query.get(location_id)
+    if not location:
+        return jsonify({"error": "Location not found"}), 404
+
+    location.discount = new_discount
+    db.session.commit()
+    return jsonify({"success": True, "message": "Discount updated successfully"}), 200
+
+@app.route('/add_location', methods=['POST'])
+def add_location():
+    data = request.get_json()
+    name = data.get('name')
+    location = data.get('location')
+    loc_type = data.get('loc_type')
+    price = data.get('price')
+    nr_slots = data.get('nr_slots')
+    discount = data.get('discount')
+
+    if not all([name, location, loc_type, price, nr_slots, discount]):
+        return jsonify({"error": "Missing one or more fields"}), 400
+
+    new_location = Locations(name=name, location=location, type=loc_type, price=price, nrSlots=nr_slots, discount=discount)
+    db.session.add(new_location)
+    db.session.commit()
+    return jsonify({"success": True, "message": "Location added successfully"}), 201
+
+@app.route('/remove_location', methods=['DELETE'])
+def remove_location():
+    location_id = request.args.get('location_id')
+
+    if not location_id:
+        return jsonify({"error": "Missing location_id"}), 400
+
+    location = Locations.query.get(location_id)
+    if not location:
+        return jsonify({"error": "Location not found"}), 404
+
+    db.session.delete(location)
+    db.session.commit()
+    return jsonify({"success": True, "message": "Location removed successfully"}), 200
+
+@app.route('/change_slots', methods=['POST'])
+def change_slots():
+    data = request.get_json()
+    location_id = data.get('location_id')
+    new_slots = data.get('new_slots')
+
+    if not location_id or new_slots is None:
+        return jsonify({"error": "Missing location_id or new slots value"}), 400
+
+    location = Locations.query.get(location_id)
+    if not location:
+        return jsonify({"error": "Location not found"}), 404
+
+    location.nrSlots = new_slots
+    db.session.commit()
+    return jsonify({"success": True, "message": "Number of slots updated successfully"}), 200
+
+@app.route('/change_price', methods=['POST'])
+def change_price():
+    data = request.get_json()
+    location_id = data.get('location_id')
+    new_price = data.get('new_price')
+
+    if not location_id or new_price is None:
+        return jsonify({"error": "Missing location_id or new price value"}), 400
+
+    location = Locations.query.get(location_id)
+    if not location:
+        return jsonify({"error": "Location not found"}), 404
+
+    location.price = new_price
+    db.session.commit()
+    return jsonify({"success": True, "message": "Price updated successfully"}), 200
+
+@app.route('/get_locations', methods=['GET'])
+def get_locations():
+    try:
+        locations = Locations.query.all()
+        locations_list = [{
+            'id': location.id,
+            'name': location.name,
+            'location': location.location,
+            'type': location.type,
+            'price': location.price,
+            'nrSlots': location.nrSlots,
+            'discount': location.discount
+        } for location in locations]
+
+        return jsonify({"success": True, "locations": locations_list}), 200
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

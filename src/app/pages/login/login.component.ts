@@ -16,12 +16,21 @@ export class LoginComponent {
   loginUser(): void {
     if (this.isValidLoginData(this.loginData)) {
       console.log(this.loginData); 
-
-      this.http.post('http://localhost:5000/login', this.loginData).subscribe({
+  
+      this.http.post<{success: boolean, role: string, message?: string}>('http://localhost:5000/login', this.loginData).subscribe({
         next: (response) => {
-          console.log('Login successful', response);
-          this.authService.login("tokenToBeAdded");
-          this.router.navigate(['']); 
+          if (response.success) {
+            console.log('Login successful', response);
+            console.log('User Role:', response.role);
+
+            this.authService.login("tokenToBeAdded");
+            if(response.role =="admin")
+              this.router.navigate(['/adminPage']);
+            else
+              this.router.navigate(['']);
+          } else {
+            console.log('Login failed:', response.message);
+          }
         },
         error: (error) => {
           console.log(error);
@@ -33,6 +42,7 @@ export class LoginComponent {
       alert('Please fill in all required fields.');
     }
   }
+  
 
   isValidLoginData(data: any): boolean {
     return data.username && data.password;

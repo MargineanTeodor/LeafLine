@@ -7,6 +7,8 @@ import { LocationComponent } from './pages/location/location.component';
 import { DestinationsComponent } from './pages/destinations/destinations.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { AuthGuard } from './service/authorization/auth.guard';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { AddLocationComponent } from './pages/add-location/add-location.component';
 const routes: Routes = [
   // { path: '', component: HomepageComponent,canActivate: [AuthGuard] },
   { path: '', component: HomepageComponent},
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'location', component: LocationComponent },
   { path: 'destinations', component: DestinationsComponent},
   { path: 'contact', component: ContactComponent },
+  { path: "adminPage", component: AdminPageComponent},
+  { path: "addLocation",component: AddLocationComponent}
 ];
 
 @NgModule({

@@ -11,6 +11,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { LocationComponent } from './pages/location/location.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { AddLocationComponent } from './pages/add-location/add-location.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterComponent,
     LoginComponent,
     LocationComponent,
+    AdminPageComponent,
+    AddLocationComponent,
   ],
   imports: [
     BrowserModule,
