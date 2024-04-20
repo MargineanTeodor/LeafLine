@@ -230,5 +230,28 @@ def get_locations():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+@app.route('/get_locations_filtred', methods=['GET'])
+def get_locations_filtred():
+    try:
+        filter_location = request.args.get('location')
+        query = Locations.query
+        if filter_location:
+            query = query.filter(Locations.location.ilike(f'%{filter_location}%'))  # Case-insensitive partial match
+        locations = query.order_by(Locations.id).all()
+
+        locations_list = [{
+            'id': location.id,
+            'name': location.name,
+            'location': location.location,
+            'type': location.type,
+            'price': location.price,
+            'nrSlots': location.nrSlots,
+            'discount': location.discount
+        } for location in locations]
+        
+        return jsonify({"success": True, "locations": locations_list}), 200
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -9,18 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./destinations.component.css']
 })
 export class DestinationsComponent implements OnInit {
-  images = [
-    { id: 1, url: 'assets/images/photo1.jpg', title: 'Image 1', discount: true },
-    { id: 2, url: 'assets/images/photo2.jpg', title: 'Image 2', discount: true },
-    { id: 3, url: 'assets/images/photo3.jpg', title: 'Image 3', discount: false },
-    { id: 4, url: 'assets/images/photo3.jpg', title: 'Image 3', discount: false },
-    { id: 5, url: 'assets/images/photo3.jpg', title: 'Image 3', discount: false },
-    { id: 6, url: 'assets/images/photo3.jpg', title: 'Image 3', discount: false },
-    { id: 7, url: 'assets/images/photo3.jpg', title: 'Image 3', discount: false },
-    { id: 8, url: 'assets/images/photo3.jpg', title: 'Image 3', discount: false },
-    { id: 9, url: 'assets/images/photo3.jpg', title: 'Image 3', discount: false },
-    { id: 10, url: 'assets/images/photo3.jpg', title: 'Image 3', discount: false },
-  ];
+  images !: any[];
   currentImageIndex: number = 0;
   isDiscountOnly: boolean = false;
   city: string = ""; 
@@ -30,7 +19,22 @@ export class DestinationsComponent implements OnInit {
   ngOnInit() {
     this.getUserLocation();
     this.isLoggedIn = this.authService.isLoggedIn$;
-    console.log(this.isLoggedIn)
+    this.fetchDestinations();
+  }
+
+  fetchDestinations() {
+    this.http.get<{success: boolean, locations: any[]}>('http://localhost:5000/get_locations')
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.images = response.locations;
+            console.log('Locations fetched successfully:', this.images);
+          } else {
+            console.error('Failed to fetch locations');
+          }
+        },
+        error: (error) => console.error('Error fetching locations:', error)
+      });
   }
 
   getUserLocation() {
@@ -53,18 +57,18 @@ export class DestinationsComponent implements OnInit {
   }
 
   fetchCityName(lat: number, lon: number) {
-    const url = `http://localhost:5000/get_city_by_coords?lat=${lat}&lon=${lon}`; // Adjust this URL to your Flask endpoint
+    const url = `http://localhost:5000/get_city_by_coords?lat=${lat}&lon=${lon}`;
     this.http.get<any>(url).subscribe({
       next: (response) => {
         console.log('City:', response.city);
-        this.city = response.city; // Update the city name
+        this.city = response.city; 
       },
       error: (error) => console.error('There was an error!', error)
     });
   }
 
   get visibleImages() {
-    let filteredImages = this.isDiscountOnly ? this.images.filter(image => image.discount) : this.images;
+    let filteredImages = this.isDiscountOnly ? this.images.filter(image => image.discount-1 >0 ) : this.images;
     const desiredImagesEachSide = 2;
     let startIndex = Math.max(this.currentImageIndex - desiredImagesEachSide, 0);
     let endIndex = Math.min(this.currentImageIndex + desiredImagesEachSide, filteredImages.length - 1);
@@ -72,7 +76,7 @@ export class DestinationsComponent implements OnInit {
   }
 
   updateVisibleImages(): void {
-    const filteredImages = this.isDiscountOnly ? this.images.filter(image => image.discount) : this.images;
+    const filteredImages = this.isDiscountOnly ? this.images.filter(image => image.discount-1 > 0) : this.images;
     if (!filteredImages.map(image => image.id).includes(this.images[this.currentImageIndex].id)) {
       this.currentImageIndex = 0; 
     }
@@ -86,4 +90,27 @@ export class DestinationsComponent implements OnInit {
     this.authService.logout();
     location.reload();
   }
+
+  filterLocations() {
+    if (!this.city) {
+      alert('Please enter a city to search.');
+      return;
+    }
+    this.http.get<{success: boolean, locations: any[]}>('http://localhost:5000/get_locations_filtred', { params: { location: this.city } })
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.images = response.locations;
+            console.log('Filtered locations fetched successfully:', this.images);
+          } else {
+            console.error('No locations found with that city');
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching locations:', error);
+          alert('Error fetching locations: ' + error.message);
+        }
+      });
+  }
+
 }

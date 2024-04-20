@@ -25,7 +25,6 @@
   </div>
 </nav>
 
-
 <div class="search-form">
     <div class="date-group">
       <input type="date" id="start-date" name="start-date" placeholder="Start Date">
@@ -41,16 +40,26 @@
       </div>
       <div class="search-group">
         <input type="text" id="search-field" name="search-field" placeholder="Search destinations" [(ngModel)]="city">
-        <button type="submit" class="search-button">Search</button>
+        <button type="button" class="search-button" (click)="filterLocations()">Search</button>
       </div>
+      
   </div>
 
-  
 <div class="cover-flow">
   <div *ngFor="let image of visibleImages; let i = index" (click)="setCurrentImageIndex(i)" [class.highlighted]="i === currentImageIndex">
-    <img [src]="image.url" [alt]="image.title">
-    <div>{{image.title}}</div>
+    <img [src]="image.type === 1 ? 'assets/images/photo1.jpg' : 
+                image.type === 2 ? 'assets/images/photo2.jpg' : 
+                image.type === 3 ? 'assets/images/photo3.jpg' : 
+                image.url" 
+         [alt]="image.title">
+    <div>{{ image.title }}</div>
+    <div class="image-details">
+      <div class="image-title">{{ image.title }}</div>
+      <div class="image-cost"><strong>Cost: {{ image.price | currency }}</strong></div>
+      <div *ngIf="image.discount" class="image-discount"><strong>Discount: {{ image.discount-1}}</strong></div>
+    </div>
   </div>
 </div>
+
 </body>
 </html>
