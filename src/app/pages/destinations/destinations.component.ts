@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../service/authorization/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-destinations',
@@ -22,11 +24,13 @@ export class DestinationsComponent implements OnInit {
   currentImageIndex: number = 0;
   isDiscountOnly: boolean = false;
   city: string = ""; 
-
-  constructor(private http: HttpClient) {}
+  isLoggedIn = this.authService.isLoggedIn$;
+  constructor(private authService: AuthService,private http: HttpClient,private router: Router) {}
 
   ngOnInit() {
     this.getUserLocation();
+    this.isLoggedIn = this.authService.isLoggedIn$;
+    console.log(this.isLoggedIn)
   }
 
   getUserLocation() {
@@ -76,5 +80,10 @@ export class DestinationsComponent implements OnInit {
   
   setCurrentImageIndex(index: number): void {
     this.currentImageIndex = index;
+  }
+
+  logoutUser() {
+    this.authService.logout();
+    location.reload();
   }
 }

@@ -142,3 +142,17 @@ html, body {
   .highlighted {
     transform: scale(1.5); 
   }
+  .auth-button {
+    width: 90px; 
+    padding: 10px;
+    margin: 20px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    background-color: rgba(229, 246, 219, 0.1);
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block; 
+    text-decoration: none; 
+    transform: scale(1.4)
+  }

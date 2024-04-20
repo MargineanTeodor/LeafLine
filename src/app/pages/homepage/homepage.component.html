@@ -19,8 +19,6 @@
         <a href="/login" class="log-in-button">Log In</a>
       </div>
       <div *ngIf="isLoggedIn">
-        <span style="font-size: 1.6em;">{{ username }}</span>
-        <span style="font-size: 1.6em;">{{"   " }}</span>
         <button  class="auth-button" (click)="logoutUser()">Log Out</button>
       </div>
 </nav>

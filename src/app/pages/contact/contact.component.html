@@ -15,7 +15,12 @@
       <a class="nav-link" href="/destinations">Destinations</a>
       <a class="nav-link" href="/contact">Contact</a>
     </div>
+    <div *ngIf="!isLoggedIn">
         <a href="/login" class="log-in-button">Log In</a>
+      </div>
+      <div *ngIf="isLoggedIn">
+        <button  class="auth-button" (click)="logoutUser()">Log Out</button>
+      </div>
 </nav>
 
 <div class="handwriting-label">

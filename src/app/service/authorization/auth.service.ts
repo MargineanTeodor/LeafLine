@@ -1,25 +1,36 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(false);
-  private username = new BehaviorSubject<string>('');
 
-  public isLoggedIn = this.loggedIn.asObservable();
-  public currentUsername = this.username.asObservable();
-
-  constructor() {}
-
-  login(user: string) {
-    this.loggedIn.next(true);
-    this.username.next(user);
+  checkTokenValidity(): boolean {
+    
+    const token = localStorage.getItem('token');
+    console.log(token);
+    const expiration = localStorage.getItem('token_expiration');
+    const now = new Date();
+    if (!token || !expiration) {
+      return false;
+    }
+    return new Date(expiration) > now;
+  }
+  login(token: string): void {
+    const now = new Date();
+    const expirationDate = new Date(now.getTime() + 60 * 60 * 1000); //o ora 
+    localStorage.setItem('token', token);
+    localStorage.setItem('token_expiration', expirationDate.toISOString());
   }
 
-  logout() {
-    this.loggedIn.next(false);
-    this.username.next('');
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('token_expiration');
+  }
+
+  get isLoggedIn$():boolean {
+
+    return this.checkTokenValidity();
   }
 }

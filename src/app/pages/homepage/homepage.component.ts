@@ -6,22 +6,18 @@ import { AuthService } from '../../service/authorization/auth.service';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-  isLoggedIn: boolean = false;
-  username: string = '';
+  isLoggedIn = this.authService.isLoggedIn$;
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit() {
-    this.authService.isLoggedIn.subscribe((loginStatus) => {
-      this.isLoggedIn = loginStatus;
-    });
-    this.authService.currentUsername.subscribe((name) => {
-      this.username = name;
-    });
+  ngOnInit(
+  ) {
+    this.isLoggedIn = this.authService.isLoggedIn$;
   }
 
   logoutUser() {
     this.authService.logout();
+    location.reload();
   }
 }
 
