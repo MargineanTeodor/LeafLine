@@ -95,12 +95,42 @@ button {
 }
 
 .button:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #45a049; 
 }
 
 .button:active {
-    background-color: #387c3b; /* Even darker green when pressed */
+    background-color: #387c3b;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
+}
+.actions {
+    margin-bottom: 20px;
+}
+
+.button, .update-input {
+    margin-right: 10px;
+}
+
+.update-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.logout-button {
+    background-color: #4CAF50; 
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    text-align: center;
+}
+
+.logout-button:hover {
+    background-color: #70d686; 
 }
 

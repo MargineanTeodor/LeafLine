@@ -215,7 +215,7 @@ def change_price():
 @app.route('/get_locations', methods=['GET'])
 def get_locations():
     try:
-        locations = Locations.query.all()
+        locations = Locations.query.order_by(Locations.id).all()
         locations_list = [{
             'id': location.id,
             'name': location.name,
