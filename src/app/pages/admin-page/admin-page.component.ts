@@ -49,6 +49,10 @@ export class AdminPageComponent implements OnInit {
         });
     }  
   }
+  getGraphs(locationId: number): void {
+    this.router.navigate(['/graphs']);
+    localStorage.setItem("locationId", locationId.toString() );
+  }
   changePrice(location: any): void {
     const newPrice = this.updateValue;
     if (!isNaN(newPrice)) {

@@ -43,6 +43,17 @@ class Locations(db.Model):
     nrSlots = db.Column(db.Float, nullable=False)
     discount = db.Column(db.Float, nullable=False)
 
+class Reservation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    booking_date = db.Column(db.DateTime, default=db.func.current_timestamp())
+    start_date = db.Column(db.DateTime, nullable=False)
+    end_date = db.Column(db.DateTime, nullable=False)
+    total_cost = db.Column(db.Float, nullable=False)
+    location_id = db.Column(db.Integer, db.ForeignKey('locations.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    location = db.relationship('Locations', backref=db.backref('reservations', lazy=True))
+    user = db.relationship('Users', backref=db.backref('reservations', lazy=True))
 
 @app.cli.command("init-db")
 def init_db_command():
@@ -252,6 +263,84 @@ def get_locations_filtred():
         return jsonify({"success": True, "locations": locations_list}), 200
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
+
+# from flask import Flask, request, jsonify
+# from datetime import datetime
+# import logging
+# app = Flask(__name__)
+
+# @app.route('/check_availability', methods=['GET'])
+# def check_availability():
+#     location_id = request.args.get('location_id')
+#     start_date = request.args.get('start_date')
+#     end_date = request.args.get('end_date')
+
+#     # Validare date
+#     try:
+#         start_date = datetime.strptime(start_date, '%Y-%m-%d')
+#         end_date = datetime.strptime(end_date, '%Y-%m-%d')
+#     except ValueError:
+#         return jsonify({"error": "Invalid date format, use YYYY-MM-DD"}), 400
+    
+#     # Verificare rezervări care se suprapun
+#     overlapping_reservations = Reservation.query.filter(
+#         Reservation.location_id == location_id,
+#         db.or_(
+#             db.and_(Reservation.start_date <= start_date, Reservation.end_date >= start_date),
+#             db.and_(Reservation.start_date <= end_date, Reservation.end_date >= end_date),
+#             db.and_(Reservation.start_date >= start_date, Reservation.end_date <= end_date)
+#         )
+#     ).all()
+    
+#     if overlapping_reservations:
+#         return jsonify({"available": False}), 200
+#     else:
+#         return jsonify({"available": True}), 200
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
+
+# from flask import request, jsonify
+# from datetime import datetime
+
+# @app.route('/add_reservation', methods=['POST'])
+# def add_reservation():
+#     data = request.get_json()
+    
+#     location_id = data.get('location_id')
+#     user_id = data.get('user_id')
+#     start_date = data.get('start_date')
+#     end_date = data.get('end_date')
+    
+#     try:
+#         start_date = datetime.strptime(start_date, '%Y-%m-%d')
+#         end_date = datetime.strptime(end_date, '%Y-%m-%d')
+#     except ValueError:
+#         return jsonify({"error": "Invalid date format, please use YYYY-MM-DD"}), 400
+    
+#     location = Locations.query.get(location_id)
+#     if not location:
+#         return jsonify({"error": "Location not found"}), 404
+#     total_nights = (end_date - start_date).days
+#     total_cost = total_nights * location.price
+    
+#     reservation = Reservation(
+#         location_id=location_id,
+#         user_id=user_id,
+#         start_date=start_date,
+#         end_date=end_date,
+#         total_cost=total_cost
+#     )
+    
+#     db.session.add(reservation)
+#     try:
+#         db.session.commit()
+#     except Exception as e:
+#         db.session.rollback()
+#         return jsonify({"error": "Database error", "message": str(e)}), 500
+    
+#     return jsonify({"success": True, "message": "Reservation added successfully", "reservation_id": reservation.id}), 201
 
 if __name__ == '__main__':
     app.run(debug=True)

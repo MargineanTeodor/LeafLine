@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AddLocationComponent } from './pages/add-location/add-location.component';
+import { GraphsComponent } from './pages/graphs/graphs.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,13 +26,15 @@ import { AddLocationComponent } from './pages/add-location/add-location.componen
     LocationComponent,
     AdminPageComponent,
     AddLocationComponent,
+    GraphsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule, 
+    FormsModule,
+    NgApexchartsModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]
