@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   get isLoggedIn$():boolean {
-
+    
     return this.checkTokenValidity();
   }
 }

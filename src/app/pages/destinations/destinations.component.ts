@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AuthService } from '../../service/authorization/auth.service';
 import { Router } from '@angular/router';
 
@@ -13,8 +13,16 @@ export class DestinationsComponent implements OnInit {
   currentImageIndex: number = 0;
   isDiscountOnly: boolean = false;
   city: string = ""; 
+  startDate: string;
+  endDate: string;
+  apiUrl = 'http://localhost:5000/add_reservation';
+  apiUrl2 = 'http://localhost:5000/get_user_id';
   isLoggedIn = this.authService.isLoggedIn$;
-  constructor(private authService: AuthService,private http: HttpClient,private router: Router) {}
+  idUser!: Number;
+  constructor(private authService: AuthService,private http: HttpClient,private router: Router) {
+    this.startDate = '';
+    this.endDate = '';
+  }
 
   ngOnInit() {
     this.getUserLocation();
@@ -111,6 +119,45 @@ export class DestinationsComponent implements OnInit {
           alert('Error fetching locations: ' + error.message);
         }
       });
+  }
+
+  getUserId(username: string): any {
+    const params = new HttpParams().set('username', username);
+
+    this.http.get<any>(this.apiUrl2, { params }).subscribe(
+      response => {
+        this.idUser = response.id;
+        return response.id;
+      },
+      error => {
+        console.error('Error fetching user ID:', error);
+        return 0 ; 
+      }
+    );
+  }
+  
+  reserveLocation(): void {
+    const username = localStorage.getItem('username');
+    idUser: Number
+    const idUser = this.getUserId(username!)
+    console.log(this.startDate + ' 12:00:00')
+    const dummyData = {
+      start_date: this.startDate + ' 12:00:00',
+      end_date: this.endDate + ' 12:00:00',
+      total_cost: this.images[this.currentImageIndex].price,
+      location_id: this.images[this.currentImageIndex].id,
+      user_id: 1
+    };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http.post<any>(this.apiUrl, dummyData, { headers: headers }).subscribe(
+      response => {
+        console.log('Reservation added successfully:', response);
+      },
+      error => {
+        console.error('Error adding reservation:', error);
+      }
+    );
   }
 
 }

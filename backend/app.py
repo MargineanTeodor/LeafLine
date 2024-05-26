@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from geopy.geocoders import Nominatim
+from datetime import datetime
+from sqlalchemy import extract, func
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True, resources={r"*": {"origins": "http://localhost:4200"}})
@@ -135,7 +137,18 @@ def test_db_connection():
         return jsonify({"success": True, "num_cities": num_cities})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
+    
+@app.route('/get_user_id', methods=['GET'])
+def get_user_id():
+    username = request.args.get('username')
+    if not username:
+        return jsonify({"error": "Username is required"}), 400
 
+    user = Users.query.filter_by(username=username).first()
+    if user:
+        return jsonify({"id": user.id}), 200
+    else:
+        return jsonify({"error": "User not found"}), 404
 
 # ====================== ENDPOINTS  LOCATIONS  ===========================
 
@@ -264,83 +277,61 @@ def get_locations_filtred():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
-# from flask import Flask, request, jsonify
-# from datetime import datetime
-# import logging
-# app = Flask(__name__)
 
-# @app.route('/check_availability', methods=['GET'])
-# def check_availability():
-#     location_id = request.args.get('location_id')
-#     start_date = request.args.get('start_date')
-#     end_date = request.args.get('end_date')
+# ====================== ENDPOINTS  RESERVATIONS  ===========================
 
-#     # Validare date
-#     try:
-#         start_date = datetime.strptime(start_date, '%Y-%m-%d')
-#         end_date = datetime.strptime(end_date, '%Y-%m-%d')
-#     except ValueError:
-#         return jsonify({"error": "Invalid date format, use YYYY-MM-DD"}), 400
-    
-#     # Verificare rezervări care se suprapun
-#     overlapping_reservations = Reservation.query.filter(
-#         Reservation.location_id == location_id,
-#         db.or_(
-#             db.and_(Reservation.start_date <= start_date, Reservation.end_date >= start_date),
-#             db.and_(Reservation.start_date <= end_date, Reservation.end_date >= end_date),
-#             db.and_(Reservation.start_date >= start_date, Reservation.end_date <= end_date)
-#         )
-#     ).all()
-    
-#     if overlapping_reservations:
-#         return jsonify({"available": False}), 200
-#     else:
-#         return jsonify({"available": True}), 200
+@app.route('/add_reservation', methods=['POST'])
+def add_reservation():
+    data = request.get_json()
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+    if not data:
+        return jsonify({"error": "No input data provided"}), 400
 
+    try:
+        start_date = datetime.strptime(data['start_date'], '%Y-%m-%d %H:%M:%S')
+        end_date = datetime.strptime(data['end_date'], '%Y-%m-%d %H:%M:%S')
+        total_cost = float(data['total_cost'] )
+        location_id = int(data['location_id'])
+        user_id = int(data['user_id'])
+        num_days = (end_date - start_date).days
 
-# from flask import request, jsonify
-# from datetime import datetime
+        if num_days < 1:
+            return jsonify({"error": "End date must be after start date"}), 400
 
-# @app.route('/add_reservation', methods=['POST'])
-# def add_reservation():
-#     data = request.get_json()
-    
-#     location_id = data.get('location_id')
-#     user_id = data.get('user_id')
-#     start_date = data.get('start_date')
-#     end_date = data.get('end_date')
-    
-#     try:
-#         start_date = datetime.strptime(start_date, '%Y-%m-%d')
-#         end_date = datetime.strptime(end_date, '%Y-%m-%d')
-#     except ValueError:
-#         return jsonify({"error": "Invalid date format, please use YYYY-MM-DD"}), 400
-    
-#     location = Locations.query.get(location_id)
-#     if not location:
-#         return jsonify({"error": "Location not found"}), 404
-#     total_nights = (end_date - start_date).days
-#     total_cost = total_nights * location.price
-    
-#     reservation = Reservation(
-#         location_id=location_id,
-#         user_id=user_id,
-#         start_date=start_date,
-#         end_date=end_date,
-#         total_cost=total_cost
-#     )
-    
-#     db.session.add(reservation)
-#     try:
-#         db.session.commit()
-#     except Exception as e:
-#         db.session.rollback()
-#         return jsonify({"error": "Database error", "message": str(e)}), 500
-    
-#     return jsonify({"success": True, "message": "Reservation added successfully", "reservation_id": reservation.id}), 201
+        total_cost = total_cost * num_days
+
+        new_reservation = Reservation(
+            start_date=start_date,
+            end_date=end_date,
+            total_cost=total_cost,
+            location_id=location_id,
+            user_id=user_id
+        )
+
+        db.session.add(new_reservation)
+        db.session.commit()
+
+        return jsonify({"message": "Reservation added successfully"}), 201
+
+    except KeyError as e:
+        return jsonify({"error": f"Missing key: {e.args[0]}"}), 400
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/reservations_per_month', methods=['GET'])
+def reservations_per_month():
+    location_id = request.args.get('location_id', type=int)
+    if not location_id:
+        return jsonify({"error": "Location ID is required"}), 400
+
+    reservations = db.session.query(
+        extract('month', Reservation.start_date).label('month'),
+        func.count(Reservation.id).label('count')
+    ).filter(Reservation.location_id == location_id).group_by('month').all()
+
+    data = {int(month): int(count) for month, count in reservations}
+    return jsonify(data), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)

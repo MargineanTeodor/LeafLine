@@ -21,29 +21,31 @@
     <a href="/login" class="log-in-button">Log In</a>
   </div>
   <div *ngIf="isLoggedIn">
-    <button  class="auth-button" (click)="logoutUser()">Log Out</button>
+    <button class="auth-button" (click)="logoutUser()">Log Out</button>
   </div>
 </nav>
 
 <div class="search-form">
-    <div class="date-group">
-      <input type="date" id="start-date" name="start-date" placeholder="Start Date">
-      <label for="start-date">Start Date</label>
-    </div>
-    <div class="date-group">
-      <input type="date" id="end-date" name="end-date" placeholder="End Date">
-      <label for="end-date">End Date</label>
-    </div>
+  <div class="date-group">
+    <input type="date" id="start-date" name="start-date" [(ngModel)]="startDate" placeholder="Start Date">
+    <label for="start-date">Start Date</label>
+  </div>
+  <div class="date-group">
+    <input type="date" id="end-date" name="end-date" [(ngModel)]="endDate" placeholder="End Date">
+    <label for="end-date">End Date</label>
+  </div>
     <div class="checkbox-group">
         <input type="checkbox" id="only-available" name="only-available" [(ngModel)]="isDiscountOnly" (change)="updateVisibleImages()">
         <label for="only-available">Discounts</label>
-      </div>
-      <div class="search-group">
+    </div>
+    <div class="search-group">
         <input type="text" id="search-field" name="search-field" placeholder="Search destinations" [(ngModel)]="city">
-        <button type="button" class="search-button" (click)="filterLocations()">Search</button>
-      </div>
-      
-  </div>
+        <div class="button-group">
+          <button type="button" class="search-button" (click)="filterLocations()">Search</button>
+          <button type="button" class="reserve-button" (click)="reserveLocation()">Reserve</button>
+        </div>
+    </div>
+</div>
 
 <div class="cover-flow">
   <div *ngFor="let image of visibleImages; let i = index" (click)="setCurrentImageIndex(i)" [class.highlighted]="i === currentImageIndex">
@@ -56,7 +58,7 @@
     <div class="image-details">
       <div class="image-title">{{ image.title }}</div>
       <div class="image-cost"><strong>Cost: {{ image.price | currency }}</strong></div>
-      <div *ngIf="image.discount" class="image-discount"><strong>Discount: {{ image.discount-1}}</strong></div>
+      <div *ngIf="image.discount" class="image-discount"><strong>Discount: {{ image.discount-1 }}</strong></div>
     </div>
   </div>
 </div>

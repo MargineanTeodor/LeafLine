@@ -1,158 +1,156 @@
 html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow-x: hidden;
-    font-family: Arial, sans-serif; 
-  }
-  
-  body {
-    background-image: url('./resources/images/destinations.jpg');
-    background-size: cover;
-    background-position: center; 
-    background-repeat: no-repeat; 
-    background-attachment: fixed; 
-    height: 100vh;
-  }
-  
-  .navbar {
-    background-color: rgba(229, 246, 219, 0.3);
-    padding: 0.75rem 3rem; 
-    display: flex;
-    align-items: center; 
-    justify-content: space-between;
-  }
-  .navbar-logo {
-    height: 70px; 
-    width: auto;
-    margin-right: 10px;
-  }
-
-  .navbar-brand {
-    display: flex;
-    align-items: center;
-    color: #333;
-    text-decoration: none;
-    font-size: 2rem; 
-  }
-  
-  .navbar-nav {
-    display: flex;
-    justify-content: center; 
-    flex-grow: 1; 
-  }
-  
-  .nav-link {
-    color: #333;
-    text-decoration: none;
-    padding: 0 1.125rem; 
-    font-size: 1.85rem;
-  }
-  
-  .nav-link:hover {
-    color: #000;
-  }
-
-  .search-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    margin-top: 20px;
-  }
-  
-  .checkbox-group, .search-group {
-    display: flex;
-    align-items: center;
-  }
-  
-  input[type="date"], input[type="text"] {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .search-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    margin-top: 20px;
-  }
-  
-  .date-group, .checkbox-group, .search-group {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-  }
-  
-  .date-group label, .checkbox-group label {
-    margin-top: 5px; 
-  }
-  
-  input[type="date"], input[type="text"], .search-button {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .search-button {
-    padding: 8px 15px;
-    background-color: rgba(229, 246, 219, 0.3);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .search-button:hover {
-    background-color: rgba(180, 238, 147, 0.3);
-  }
-  .log-in-button {
-    padding: 8px 15px; 
-    background-color: rgba(229, 246, 219, 0.1);  
-    text-align: center;
-    text-decoration: none;
-    font-size: 1.75rem; 
-    margin-left: auto;
-    border-radius: 5px; 
+  margin: 0;
+  padding: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow-x: hidden;
+  font-family: Arial, sans-serif; 
 }
+
+body {
+  background-image: url('./resources/images/destinations.jpg');
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed; 
+  height: 100vh;
+}
+
+.navbar {
+  background-color: rgba(229, 246, 219, 0.3);
+  padding: 0.75rem 3rem; 
+  display: flex;
+  align-items: center; 
+  justify-content: space-between;
+}
+.navbar-logo {
+  height: 70px; 
+  width: auto;
+  margin-right: 10px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  color: #333;
+  text-decoration: none;
+  font-size: 2rem; 
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: center; 
+  flex-grow: 1; 
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  padding: 0 1.125rem; 
+  font-size: 1.85rem;
+}
+
+.nav-link:hover {
+  color: #000;
+}
+
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.checkbox-group, .search-group {
+  display: flex;
+  align-items: center;
+}
+
+input[type="date"], input[type="text"] {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.date-group, .checkbox-group, .search-group {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+}
+
+.date-group label, .checkbox-group label {
+  margin-top: 5px; 
+}
+
+input[type="date"], input[type="text"], .search-button, .reserve-button {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-button, .reserve-button {
+  padding: 8px 15px;
+  background-color: rgba(229, 246, 219, 0.3);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.search-button:hover, .reserve-button:hover {
+  background-color: rgba(180, 238, 147, 0.3);
+}
+
+.log-in-button {
+  padding: 8px 15px; 
+  background-color: rgba(229, 246, 219, 0.1);  
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.75rem; 
+  margin-left: auto;
+  border-radius: 5px; 
+}
+
 .cover-flow {
-    display: flex;
-    justify-content: center;
-    overflow-x: auto;
-    padding: 100px;
-  }
-  
-  .cover-flow div {
-    flex: none;
-    transition: transform 0.5s ease;
-    margin: 0 10px;
-    text-align: center;
-  }
-  
-  .cover-flow img {
-    width: 250px; 
-    height: auto;
-    display: block;
-  }
-  .highlighted {
-    transform: scale(1.5); 
-  }
-  .auth-button {
-    width: 90px; 
-    padding: 10px;
-    margin: 20px;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    background-color: rgba(229, 246, 219, 0.1);
-    color: black;
-    cursor: pointer;
-    text-align: center;
-    display: inline-block; 
-    text-decoration: none; 
-    transform: scale(1.4)
-  }
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 100px;
+}
+
+.cover-flow div {
+  flex: none;
+  transition: transform 0.5s ease;
+  margin: 0 10px;
+  text-align: center;
+}
+
+.cover-flow img {
+  width: 250px; 
+  height: auto;
+  display: block;
+}
+.highlighted {
+  transform: scale(1.5); 
+}
+.auth-button {
+  width: 90px; 
+  padding: 10px;
+  margin: 20px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  background-color: rgba(229, 246, 219, 0.1);
+  color: black;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block; 
+  text-decoration: none; 
+  transform: scale(1.4)
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}

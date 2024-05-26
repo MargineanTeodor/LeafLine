@@ -16,14 +16,14 @@ export class LoginComponent {
   loginUser(): void {
     if (this.isValidLoginData(this.loginData)) {
       console.log(this.loginData); 
-  
+      localStorage.setItem("username", this.loginData.username.toString());
       this.http.post<{success: boolean, role: string, message?: string}>('http://localhost:5000/login', this.loginData).subscribe({
         next: (response) => {
           if (response.success) {
             console.log('Login successful', response);
             console.log('User Role:', response.role);
 
-            this.authService.login("tokenToBeAdded");
+            this.authService.login("token");
             if(response.role =="admin")
               this.router.navigate(['/adminPage']);
             else
@@ -45,6 +45,7 @@ export class LoginComponent {
   
 
   isValidLoginData(data: any): boolean {
+    
     return data.username && data.password;
   }
 
